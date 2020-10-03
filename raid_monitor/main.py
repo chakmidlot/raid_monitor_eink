@@ -1,14 +1,7 @@
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
-import dataclasses
-import json
 import logging
 import time
-import os
 
-from PIL import Image, ImageDraw, ImageFont
-
-from raid_monitor.checker.disk import mock, get_data
+from raid_monitor.sensors.disk import DiskSensor
 from raid_monitor.lib import epd2in13b_V3
 from raid_monitor.picture import screen
 
@@ -25,7 +18,7 @@ def main():
 
         while True:
             data = {
-                'disk': get_data(),
+                'disk': DiskSensor().get_data(),
             }
 
             logging.info(data)

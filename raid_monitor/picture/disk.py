@@ -1,9 +1,7 @@
-import re
-
 from PIL import Image, ImageDraw, ImageFont
 
-from raid_monitor import picture, settings
-from raid_monitor.checker.disk import Disk, RAID_STATE
+from raid_monitor import picture
+from raid_monitor.sensors.disk import Disk, RAID_STATE
 
 
 def draw(black: Image, red: Image, data: Disk):

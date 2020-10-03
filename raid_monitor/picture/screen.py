@@ -1,8 +1,8 @@
-from PIL import Image, ImageDraw
+from PIL import Image
 
 from raid_monitor import settings
-from raid_monitor.picture import clock, disk, image
-from raid_monitor.checker.disk import mock
+from raid_monitor.picture import clock, disk
+from raid_monitor.sensors.mocks.disk_resync_mock import MockResyncDiskSensor
 
 
 def draw(data):
@@ -11,7 +11,6 @@ def draw(data):
 
     clock.draw(black, red)
     disk.draw(black, red, data['disk'])
-    # image.draw(black, red)
 
     return black, red
 
@@ -37,9 +36,8 @@ def combine_black_red(black, red):
 
 
 if __name__ == '__main__':
-    # data = {'disk': mock['ready']}
-    data = {'disk': mock['resync']}
-    # data = {'disk': mock['one_disk']}
-    # data = {'disk': mock['failed']}
+    data = {
+        'disk': MockResyncDiskSensor().get_data()
+    }
 
     combine_black_red(*draw(data)).save('combined.bmp')
