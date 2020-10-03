@@ -3,8 +3,12 @@ import re
 import subprocess
 from dataclasses import dataclass
 from enum import Enum, auto
+from typing import Optional
 
 from raid_monitor import settings
+
+
+logger = logging.getLogger(__name__)
 
 
 class RAID_STATE(Enum):
@@ -17,10 +21,10 @@ class RAID_STATE(Enum):
 @dataclass
 class Disk:
     state: RAID_STATE
-    size: float
-    used: float
-    resync: float
-    description: str
+    size: Optional[float]
+    used: Optional[float]
+    resync: Optional[float]
+    description: Optional[str]
 
 
 class DiskSensor:
@@ -33,15 +37,20 @@ class DiskSensor:
             if state == RAID_STATE.FAILED or space is None:
                 return Disk(state=RAID_STATE.FAILED, size=None, used=None, resync=None, description='No raid found')
 
-            return Disk(
+            info = Disk(
                 state=state,
                 size=int(space['total']),
                 used=int(space['used']),
                 resync=details.get('percent'),
                 description=None
             )
+
+            logger.info(info)
+
+            return info
+
         except Exception:
-            logging.exception("Failed reading disk info")
+            logger.exception("Failed reading disk info")
             return Disk(
                 state=RAID_STATE.FAILED,
                 size=None,

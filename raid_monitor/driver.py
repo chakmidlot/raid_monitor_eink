@@ -4,11 +4,14 @@ from contextlib import contextmanager
 from raid_monitor.lib import epd2in13b_V3
 
 
+logger = logging.getLogger(__name__)
+
+
 @contextmanager
 def driver():
     epd = epd2in13b_V3.EPD()
 
-    logging.info("init and Clear")
+    logger.info("init and Clear")
     epd.init()
     epd.Clear()
 
@@ -27,7 +30,7 @@ def driver():
 
             epd.display(epd.getbuffer(black), epd.getbuffer(red))
 
-            logging.info("Goto Sleep...")
+            logger.info("Goto Sleep...")
             epd.sleep()
 
         yield draw
