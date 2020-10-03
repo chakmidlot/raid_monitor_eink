@@ -1,0 +1,5 @@
+.idea
+combined.bmp
+
+__pycache__
+*.pyc

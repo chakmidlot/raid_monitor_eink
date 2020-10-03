@@ -1,0 +1,5 @@
+EPD_HEIGHT = 104
+EPD_WIDTH = 212
+
+RAID = 'md0'
+MOUNT = '/media/RAID1'
