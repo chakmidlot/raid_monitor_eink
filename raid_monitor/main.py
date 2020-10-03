@@ -43,7 +43,7 @@ def main():
             logging.info("Goto Sleep...")
             epd.sleep()
 
-            time.sleep(60)
+            time.sleep(600)
 
     finally:
         epd2in13b_V3.epdconfig.module_exit()
