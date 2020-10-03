@@ -1,46 +1,24 @@
 import logging
 import time
 
-from raid_monitor.sensors.disk import DiskSensor
-from raid_monitor.lib import epd2in13b_V3
+from raid_monitor.driver import driver
+from raid_monitor.sensors.data import prepare_data
 from raid_monitor.picture import screen
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 
 def main():
-    epd = epd2in13b_V3.EPD()
-    epd.init()
-
-    try:
-        logging.info("init and Clear")
-        i = 0
-
+    with driver() as draw:
         while True:
-            data = {
-                'disk': DiskSensor().get_data(),
-            }
 
+            data = prepare_data()
             logging.info(data)
-
-            epd.init()
-
-            i += 1
-            if i == 10:
-                epd.Clear()
-                i = 0
-
-            black, red = screen.draw(data)
-            epd.display(epd.getbuffer(black), epd.getbuffer(red))
-
-            logging.info("Goto Sleep...")
-            epd.sleep()
+            draw(*screen.build_images(data))
 
             time.sleep(600)
-
-    finally:
-        epd2in13b_V3.epdconfig.module_exit()
-        epd.Dev_exit()
 
 
 if __name__ == '__main__':

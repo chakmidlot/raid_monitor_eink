@@ -5,7 +5,7 @@ from raid_monitor.picture import clock, disk
 from raid_monitor.sensors.mocks.disk_resync_mock import MockResyncDiskSensor
 
 
-def draw(data):
+def build_images(data):
     black = Image.new('1', (settings.EPD_WIDTH, settings.EPD_HEIGHT), 255)
     red = Image.new('1', (settings.EPD_WIDTH, settings.EPD_HEIGHT), 255)
 
@@ -40,4 +40,4 @@ if __name__ == '__main__':
         'disk': MockResyncDiskSensor().get_data()
     }
 
-    combine_black_red(*draw(data)).save('combined.bmp')
+    combine_black_red(*build_images(data)).save('combined.bmp')
