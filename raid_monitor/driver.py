@@ -37,4 +37,3 @@ def driver():
 
     finally:
         epd.Dev_exit()
-

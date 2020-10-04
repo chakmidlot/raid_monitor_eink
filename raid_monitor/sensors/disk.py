@@ -68,7 +68,6 @@ class DiskSensor:
 
         return process.stdout.read().decode()
 
-
     def get_disk_space(self):
         process = subprocess.Popen(['df', '-BG'], stdout=subprocess.PIPE)
         process.wait()

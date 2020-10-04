@@ -4,7 +4,7 @@ import time
 from raid_monitor import settings
 from raid_monitor.driver import driver
 from raid_monitor.sensors.data import prepare_data
-from raid_monitor.picture import screen
+from raid_monitor import picture
 
 
 logger = logging.getLogger(__name__)
@@ -15,8 +15,8 @@ def main():
         while True:
 
             data = prepare_data()
-            logger.info(data)
-            draw(*screen.build_images(data))
+            black, red = picture.build_images(data)
+            draw(black, red)
 
             time.sleep(settings.REFRESH_TIME)
 

@@ -1,14 +1,14 @@
 from PIL import Image, ImageDraw, ImageFont
 
-from raid_monitor import picture
 from raid_monitor.sensors.disk import Disk, RAID_STATE
+from raid_monitor.settings import font_path
 
 
 def draw(black: Image, red: Image, data: Disk):
     draw_black = ImageDraw.Draw(black)
     draw_red = ImageDraw.Draw(red)
 
-    font = ImageFont.truetype(picture.font_path, 18)
+    font = ImageFont.truetype(font_path, 18)
 
     bar_width = 150
 
