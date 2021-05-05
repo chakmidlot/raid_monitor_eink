@@ -3,7 +3,7 @@ import os
 from PIL import Image
 
 from raid_monitor import settings
-from raid_monitor.picture import clock, disk, image, temperature
+from raid_monitor.picture import clock, disk, image, temperature, countdown
 from raid_monitor.sensors.mocks.cpu_temperature_low import MockCpuTemperatureSensor
 from raid_monitor.sensors.mocks.disk_resync_mock import MockResyncDiskSensor
 
@@ -16,6 +16,7 @@ def build_images(data):
     clock.draw(black, red)
     disk.draw(black, red, data['disk'])
     temperature.draw(black, red, data['temperature'])
+    countdown.draw(black, red, data['countdown'])
 
     return black, red
 
@@ -43,7 +44,8 @@ def combine_black_red_debug(black, red):
 if __name__ == '__main__':
     data = {
         'disk': MockResyncDiskSensor().get_data(),
-        'temperature': MockCpuTemperatureSensor().get_data()
+        'temperature': MockCpuTemperatureSensor().get_data(),
+        'countdown': '7.3'
     }
 
     combine_black_red_debug(*build_images(data)).save('../../docs/result_image.jpg')
